@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[86]:
-
-
 import numpy as np
 import math
 from scipy.stats import multivariate_normal
@@ -72,10 +66,6 @@ class igmm:
             iter+=1
         return
 
-
-# In[44]:
-
-
 class gen_samples:
     def __init__(self, pi, mu, C):
         self.X = list()
@@ -93,10 +83,7 @@ class gen_samples:
             iter += 1
         return
 
-
-# In[78]:
-
-
+#Generation of Random Dataset
 pi_value = [1/4, 3/4]
 pi_value = np.array(pi_value)
 mu_value = [[-5,0,0], [10,0,5]]
@@ -108,19 +95,9 @@ sample_generator.generate_samples(1000)
 X = sample_generator.X
 X = np.array(X)
 
-
-# In[87]:
-
-
+#Setting up the parameters
 sigma_threshold = (np.max(X)-np.min(X))/10
 tau = 0.01
 dim = 3
 incremental_model = igmm(X,dim,sigma_threshold,tau)
 incremental_model.fit()
-
-
-# In[ ]:
-
-
-
-
