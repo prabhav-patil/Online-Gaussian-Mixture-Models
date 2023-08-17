@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import math
 from scipy.stats import multivariate_normal
+#Incremental Approach
 class igmm:
     def __init__(self, X, dim, sigma_ini, tau):
         self.X = X
@@ -72,10 +67,7 @@ class igmm:
             iter+=1
         return
 
-
-# In[2]:
-
-
+#Generating Random Dataset
 class gen_samples:
     def __init__(self, pi, mu, C):
         self.X = list()
@@ -93,10 +85,6 @@ class gen_samples:
             iter += 1
         return
 
-
-# In[3]:
-
-
 pi_value = [1/4, 3/4]
 pi_value = np.array(pi_value)
 mu_value = [[-5,0,0], [10,0,5]]
@@ -108,20 +96,13 @@ sample_generator.generate_samples(1000)
 X = sample_generator.X
 X = np.array(X)
 
-
-# In[4]:
-
-
 sigma_threshold = (np.max(X)-np.min(X))/10
 tau = 0.01
 dim = 3
 incremental_model = igmm(X,dim,sigma_threshold,tau)
 incremental_model.fit()
 
-
-# In[5]:
-
-
+#Removing Spurious Components
 import numpy as np
 import math
 from scipy.stats import chi2
@@ -202,10 +183,7 @@ class deletespurious:
             self.params[i][0] = self.params[i][3]/total_spsum
         return
 
-
-# In[6]:
-
-
+#Implementation
 M = len(incremental_model.pi)
 params = []
 for k in range(M):
@@ -221,10 +199,3 @@ remove_spurious = deletespurious(params, dim, confidence)
 remove_spurious.deleteLMspurious()
 for k in range(len(remove_spurious.params)):
     print(f"Component #{k+1}:\nPrior Probability:{remove_spurious.params[k][0]}\nMean:{remove_spurious.params[k][1]}\nContribution:{remove_spurious.params[k][3]}\nCovariance\n{remove_spurious.params[k][2]}\n")
-
-
-# In[ ]:
-
-
-
-
