@@ -22,7 +22,6 @@ class igmm:
         createnew = True
         for i in range(len(self.pi)):
             novelty_criterion = self.tau/(((2*math.pi)**(dim/2))*math.sqrt(np.linalg.det(np.array(self.C[i]))))
-            #print(f"Is this not a vector of length 2: {self.mu[i]}\n Dimensions: {np.shape(self.mu[i])}")
             mvn = multivariate_normal(mean = self.mu[i][0], cov = np.array(self.C[i]))
             pdf_value = mvn.pdf(x)
             if(pdf_value >= novelty_criterion):
