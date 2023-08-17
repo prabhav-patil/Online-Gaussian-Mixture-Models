@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 import numpy as np
 import math
 from scipy.stats import chi2
@@ -83,10 +77,3 @@ class deletespurious:
         for i in range(len(self.params)):
             self.params[i][0] = self.params[i][3]/total_spsum
         return
-
-
-# In[ ]:
-
-
-
-
