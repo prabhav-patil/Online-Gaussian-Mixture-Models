@@ -64,39 +64,3 @@ class igmm:
                 print(f"\033[1mComponent #{j+1}:\033[0m\nPrior Probability: {print_pi[j]}\nMean: {print_mean[j][0]}\nContribution of dataset: {print_sp[j]}\nCovariance:\n {print_cov[j]}")
             iter+=1
         return
-
-class gen_samples:
-    def __init__(self, pi, mu, C):
-        self.X = list()
-        self.pi = pi
-        self.mu = mu
-        self.C = C
-        return
-    
-    def generate_samples(self, n_samples):
-        iter = 1
-        while(iter <= n_samples):
-            z_i = np.argmax(np.random.multinomial(1, self.pi))
-            sample = np.random.multivariate_normal(self.mu[z_i], self.C[z_i], 1)
-            self.X.append(np.array(sample))
-            iter += 1
-        return
-
-#Generation of Random Dataset
-pi_value = [1/4, 3/4]
-pi_value = np.array(pi_value)
-mu_value = [[-5,0,0], [10,0,5]]
-mu_value = np.array(mu_value)
-C_value = [[[1,0,0],[0,1,0],[0,0,1]],[[1,0,0],[0,1,0],[0,0,1]]]
-C_value = np.array(C_value)
-sample_generator = gen_samples(pi_value, mu_value, C_value)
-sample_generator.generate_samples(1000)
-X = sample_generator.X
-X = np.array(X)
-
-#Setting up the parameters
-sigma_threshold = (np.max(X)-np.min(X))/10
-tau = 0.01
-dim = 3
-incremental_model = igmm(X,dim,sigma_threshold,tau)
-incremental_model.fit()
