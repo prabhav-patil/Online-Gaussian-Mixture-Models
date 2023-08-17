@@ -16,6 +16,11 @@ Approach: When adding a new component, set spj = 1 and update prior probabilitie
 ensure consistency.
 
 2. Removing Spurious Phase:
-Input: [p(j),mu(j),C(j),sp(j)]
+Input:  [p(j),mu(j),C(j),sp(j)]
 Output: [p(j),mu(j),C(j),sp(j)]
 
+Functions to take care of:
+-> delete_trivial([p(j),mu(j),C(j),sp(j)])
+-> createLM([p(j),mu(j),C(j),sp(j)])
+-> updateLM(LM, [p(j),mu(j),C(j),sp(j)])
+-> deleteLMspurious([p(j),mu(j),C(j),sp(j)])
