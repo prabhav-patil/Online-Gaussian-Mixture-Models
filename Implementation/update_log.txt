@@ -1,0 +1,26 @@
+Break it down into 2 phases:
+1. Incremental Phase.
+2. Removing Spurious Phase.
+
+1. Incremental Phase:
+Input: X, sigma_ini, tau
+Output: [p(j),mu(j),C(j),sp(j)]
+
+Functions to take care of:
+-> createnewornot(x,[p(j),mu(j),C(j),sp(j)],tau)
+-> update(x,[p(j),mu(j),C(j),sp(j)])
+-> posterior_prob(x,[p(j),mu(j),C(j),sp(j)])
+
+Doubt: When we are creating a new component won't the prior probabilities change as well?
+Approach: When adding a new component, set spj = 1 and update prior probabilities. Would
+ensure consistency.
+
+2. Removing Spurious Phase:
+Input:  [p(j),mu(j),C(j),sp(j)]
+Output: [p(j),mu(j),C(j),sp(j)]
+
+Functions to take care of:
+-> delete_trivial([p(j),mu(j),C(j),sp(j)])
+-> createLM([p(j),mu(j),C(j),sp(j)])
+-> updateLM(LM, [p(j),mu(j),C(j),sp(j)])
+-> deleteLMspurious([p(j),mu(j),C(j),sp(j)])
