@@ -40,7 +40,7 @@ class deletespurious:
         LM = np.array(LM)
         return LM
     
-    def updateLM(self, LM, sum_LP, index_to_remove):
+    def updateLM(self, LM, sum_LM, index_to_remove):
         updated_LM = np.delete(np.delete(LM, index_to_remove, axis=0), index_to_remove, axis=1)
         updated_sum_LM = np.delete(sum_LM, index_to_remove)
         del self.params[index_to_remove]
@@ -56,8 +56,10 @@ class deletespurious:
         while(continue_update):
             continue_update = False
             num_components = len(sum_LM)
-            for i in range(num_components):
-                for j in range(num_components):
+            i=0
+            while(i<num_components):
+                j=0
+                while(j<num_components):
                     if(LM[i][j]==1):
                         if(sum_LM[j]>=2):
                             continue_update = True
@@ -73,6 +75,8 @@ class deletespurious:
                         i-=1
                         if(j>=i):
                             j-=1
+                    j=j+1
+                i=i+1
         total_spsum = sum(x[3] for x in self.params)
         for i in range(len(self.params)):
             self.params[i][0] = self.params[i][3]/total_spsum
