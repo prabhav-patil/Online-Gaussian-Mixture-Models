@@ -56,10 +56,8 @@ class deletespurious:
         while(continue_update):
             continue_update = False
             num_components = len(sum_LM)
-            i=0
-            while(i<num_components):
-                j=0
-                while(j<num_components):
+            for i in range(num_components):
+                for j in range(num_components):
                     if(LM[i][j]==1):
                         if(sum_LM[j]>=2):
                             continue_update = True
@@ -71,12 +69,9 @@ class deletespurious:
                             updated_LM, updated_sumLM = self.updateLM(LM, sum_LM, i)
                             LM = updated_LM
                             sum_LM = updated_sumLM
-                        num_components = len(sum_LM)
-                        i-=1
-                        if(j>=i):
-                            j-=1
-                    j=j+1
-                i=i+1
+                        break
+                if(continue_update):
+                    break
         total_spsum = sum(x[3] for x in self.params)
         for i in range(len(self.params)):
             self.params[i][0] = self.params[i][3]/total_spsum
