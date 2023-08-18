@@ -173,10 +173,9 @@ class deletespurious:
                             updated_LM, updated_sumLM = self.updateLM(LM, sum_LM, i)
                             LM = updated_LM
                             sum_LM = updated_sumLM
-                        num_components = len(sum_LM)
-                        i-=1
-                        if(j>=i):
-                            j-=1
+                        break
+                if(continue_update):
+                    break
         total_spsum = sum(x[3] for x in self.params)
         for i in range(len(self.params)):
             self.params[i][0] = self.params[i][3]/total_spsum
