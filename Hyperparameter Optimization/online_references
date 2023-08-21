@@ -1,0 +1,8 @@
+Theoretical Aspect:
+https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f
+https://towardsdatascience.com/bayesian-optimization-and-hyperparameter-tuning-6a22f14cb9fa
+
+Implementation Aspect:
+https://towardsdatascience.com/bayesian-hyperparameter-optimization-17dc5834112d
+https://www.run.ai/guides/hyperparameter-tuning/bayesian-hyperparameter-optimization
+https://maelfabien.github.io/machinelearning/HyperOpt/#gaussian-process-gp
