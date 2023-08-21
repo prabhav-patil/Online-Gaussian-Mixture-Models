@@ -1,7 +1,7 @@
+#IGMM Model
 import numpy as np
 import math
 from scipy.stats import multivariate_normal
-#Incremental Approach
 class igmm:
     def __init__(self, X, dim, sigma_ini, tau):
         self.X = X
@@ -22,6 +22,7 @@ class igmm:
         createnew = True
         for i in range(len(self.pi)):
             novelty_criterion = self.tau/(((2*math.pi)**(dim/2))*math.sqrt(np.linalg.det(np.array(self.C[i]))))
+            #print(f"Is this not a vector of length 2: {self.mu[i]}\n Dimensions: {np.shape(self.mu[i])}")
             mvn = multivariate_normal(mean = self.mu[i][0], cov = np.array(self.C[i]))
             pdf_value = mvn.pdf(x)
             if(pdf_value >= novelty_criterion):
@@ -66,42 +67,69 @@ class igmm:
             iter+=1
         return
 
-#Generating Random Dataset
+#Generate Data Sample from Source Mixture
 class gen_samples:
-    def __init__(self, pi, mu, C):
+    def __init__(self, pi, mu, C, dim):
         self.X = list()
         self.pi = pi
         self.mu = mu
         self.C = C
+        self.dim = dim
         return
     
     def generate_samples(self, n_samples):
         iter = 1
         while(iter <= n_samples):
             z_i = np.argmax(np.random.multinomial(1, self.pi))
-            sample = np.random.multivariate_normal(self.mu[z_i], self.C[z_i], 1)
+            if(self.dim==1):
+                sample = np.random.normal(self.mu[z_i][0], self.C[z_i][0], 1)
+            else:
+                sample = np.random.multivariate_normal(self.mu[z_i], self.C[z_i], 1)
             self.X.append(np.array(sample))
             iter += 1
         return
 
-pi_value = [1/4, 3/4]
+#Plot (1-D) Datasets
+import matplotlib.pyplot as plt
+def gaussian(x, mean, std):
+    return np.exp(-0.5*((x-mean)/std)**2)/(std*np.sqrt(2*np.pi))
+def plot_generated_samples(data_points,pi_value,mu_value,C_value,dim):
+    if dim==1:
+        x_vals = np.linspace(min(data_points) - 1, max(data_points) + 1, 500)
+        y_mixture = np.zeros_like(x_vals)
+        for i in range(len(pi_value)):
+            y_vals = pi_value[i]*gaussian(x_vals,mu_value[i][0],C_value[i][0])
+            y_mixture = y_mixture + y_vals
+        plt.plot(x_vals,y_mixture,label='Source Mixture')
+        plt.scatter(data_points, np.zeros_like(data_points), color='red', label='Generated Samples')
+        plt.xlabel('X')
+        plt.ylabel('Density')
+        plt.title('Generated Samples from Source Mixture')
+        plt.legend()
+        plt.grid()
+        plt.show()
+    return
+
+#Implementation of IGMM
+dim = 1
+pi_value = [1/2, 1/2]
 pi_value = np.array(pi_value)
-mu_value = [[-5,0,0], [10,0,5]]
+mu_value = [[-10],[10]]
 mu_value = np.array(mu_value)
-C_value = [[[1,0,0],[0,1,0],[0,0,1]],[[1,0,0],[0,1,0],[0,0,1]]]
+C_value = [[4],[1]]
 C_value = np.array(C_value)
-sample_generator = gen_samples(pi_value, mu_value, C_value)
+sample_generator = gen_samples(pi_value, mu_value, C_value,dim)
 sample_generator.generate_samples(1000)
 X = sample_generator.X
 X = np.array(X)
+plot_generated_samples(X,pi_value,mu_value,C_value,dim)
 
 sigma_threshold = (np.max(X)-np.min(X))/10
-tau = 0.01
-dim = 3
+tau = 0.1
 incremental_model = igmm(X,dim,sigma_threshold,tau)
 incremental_model.fit()
 
-#Removing Spurious Components
+#Removing Spurious Components Model
 import numpy as np
 import math
 from scipy.stats import chi2
@@ -144,7 +172,7 @@ class deletespurious:
         LM = np.array(LM)
         return LM
     
-    def updateLM(self, LM, sum_LP, index_to_remove):
+    def updateLM(self, LM, sum_LM, index_to_remove):
         updated_LM = np.delete(np.delete(LM, index_to_remove, axis=0), index_to_remove, axis=1)
         updated_sum_LM = np.delete(sum_LM, index_to_remove)
         del self.params[index_to_remove]
@@ -181,7 +209,25 @@ class deletespurious:
             self.params[i][0] = self.params[i][3]/total_spsum
         return
 
-#Implementation
+#Plot (1-D) Output Mixture Model based on Dataset
+def plot_output_fit(data_points,pi_value,mu_value,C_value,dim):
+    if dim==1:
+        x_vals = np.linspace(min(data_points) - 1, max(data_points) + 1, 500)
+        y_mixture = np.zeros_like(x_vals)
+        for i in range(len(pi_value)):
+            y_vals = pi_value[i]*gaussian(x_vals,mu_value[i][0],C_value[i][0])
+            y_mixture = y_mixture + y_vals
+        plt.plot(x_vals,y_mixture,label='Output Mixture')
+        plt.scatter(data_points, np.zeros_like(data_points), color='red', label='Generated Samples')
+        plt.xlabel('X')
+        plt.ylabel('Density')
+        plt.title('Estimated Mixture from Generated Samples')
+        plt.legend()
+        plt.grid()
+        plt.show()
+    return
+
+#Implementation of Removal Phase
 M = len(incremental_model.pi)
 params = []
 for k in range(M):
@@ -191,9 +237,15 @@ for k in range(M):
     current_components.append(incremental_model.C[k])
     current_components.append(incremental_model.sp[k])
     params.append(current_components)
-dim = 3
 confidence = 0.95
 remove_spurious = deletespurious(params, dim, confidence)
 remove_spurious.deleteLMspurious()
+output_prior = []
+output_mean = []
+output_C = []
 for k in range(len(remove_spurious.params)):
-    print(f"Component #{k+1}:\nPrior Probability:{remove_spurious.params[k][0]}\nMean:{remove_spurious.params[k][1]}\nContribution:{remove_spurious.params[k][3]}\nCovariance\n{remove_spurious.params[k][2]}\n")
+    output_prior.append(remove_spurious.params[k][0])
+    output_mean.append(remove_spurious.params[k][1])
+    output_C.append(remove_spurious.params[k][2])
+    print(f"\033[1mComponent #{k+1}:\033[0m\nPrior Probability:{remove_spurious.params[k][0]}\nMean:{remove_spurious.params[k][1]}\nContribution:{remove_spurious.params[k][3]}\nCovariance\n{remove_spurious.params[k][2]}")
+plot_output_fit(X, output_prior, output_mean, output_C, dim)
