@@ -3,6 +3,8 @@ Note: We consider only 1-D dataset to empirical analysis
 
 Case-I: Checking the efficiency corresponding to the number of generated samples
 - As the samples increase, the covariance values decrease as the model becomes increasingly more definite
+- The classical incremental approaches in estimating the correct prior probabilities for some reason.
 
 Case-II: Checking the efficiency corresponding to the hyperparameters
+
 Case-III: Checking the efficiency corresponding to the parameters of the Gaussian Mixtures
