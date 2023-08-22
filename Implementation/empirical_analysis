@@ -1,5 +1,8 @@
 Note: We consider only 1-D dataset to empirical analysis
+(This model is sensitive to its hyperparameters)
 
 Case-I: Checking the efficiency corresponding to the number of generated samples
+- As the samples increase, the covariance values decrease as the model becomes increasingly more definite
+
 Case-II: Checking the efficiency corresponding to the hyperparameters
 Case-III: Checking the efficiency corresponding to the parameters of the Gaussian Mixtures
