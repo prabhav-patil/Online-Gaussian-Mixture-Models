@@ -8,9 +8,13 @@ Case-I: Checking the efficiency corresponding to the number of generated samples
 Case-II: Checking the efficiency corresponding to the hyperparameters
 -> The mean is not affected. The offset is correctly determined in almost every case until the number of components are correctly determined.
 -> The prior probability is also not that sensitive to the hyperparameters and is determined almost correctly for every sample.
--> The model is set below 0.2 correctly estimates the mixture and is stable compared to other hyperparameters.
+-> Tau if set below 0.2 correctly estimates the mixture and is stable compared to other hyperparameters.
 -> The model is too sensitive on the sigma_ini parameter to detemine the covariance. It affects covariance too much if we set it too high or too low.
 -> The pthv component is not properly extrapolated in some cases. It reduces the number of components to a great extent in some samples.
--> The confidence threshold if set above 0.95 usually determines correct number of components to be removed and is stable compared to other hyperparameters.
+-> The confidence threshold if set above 0.95 usually estimates correct mixture and is stable compared to other hyperparameters.
+
+  Stable Hyperparameters: tau, confidence_threshold  
+  Sensitive Hyperparameters: sigma_ini, pthv
+  Incorrectly extrapolated hyperparameters: pthv
 
 Case-III: Checking the efficiency corresponding to the parameters of the Gaussian Mixtures
