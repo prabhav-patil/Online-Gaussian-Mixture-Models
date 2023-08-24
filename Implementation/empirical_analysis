@@ -16,3 +16,7 @@ Case-II: Checking the efficiency corresponding to the hyperparameters
 -> The confidence threshold if set above 0.95 usually estimates correct mixture and is stable compared to other hyperparameters.
 
 Case-III: Checking the efficiency corresponding to the parameters of the Gaussian Mixtures
+-> As we begin to merge our cluster mixtures together, we need to increase the novelty threshold to incorporate getting more number of components than what they originally look like
+-> sigma_ini is a major initialization issue to get a correct sense of covariance values and it also has a significant effect on the number of components
+-> We need to have a different settings of hyperparameter for different set of structure of source mixtures.
+-> To get a robust estimate of correct fit, we need to extrapolate these hyperparameters on a large set of dataset and fit them accordingly
