@@ -1,5 +1,4 @@
 Note: We consider only 1-D dataset to empirical analysis
-(This model is very sensitive to its hyperparameters)
 
 Stable Hyperparameters: tau, confidence_threshold  
 Sensitive Hyperparameters: sigma_ini, pthv
