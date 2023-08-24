@@ -9,6 +9,7 @@ Case-I: Checking the efficiency corresponding to the number of generated samples
 -> The objective here is to basically check if the model is updating beliefs correctly according to new data being fitted into the model.
 
 Case-II: Checking the efficiency corresponding to the hyperparameters
+( We assume that the parameters of the source mixture do not significantly overlap and each datapoint generated has a significant distinction to the mixture component it belongs to )
 -> The mean is not affected. The offset is correctly determined in almost every case until the number of components are correctly determined.
 -> The prior probability is also not that sensitive to the hyperparameters and is determined almost correctly for every sample.
 -> Tau if set below 0.2 correctly estimates the mixture and is stable compared to other hyperparameters.
