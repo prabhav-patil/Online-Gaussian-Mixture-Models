@@ -11,6 +11,6 @@ Case-II: Checking the efficiency corresponding to the hyperparameters
 -> The model is set below 0.2 correctly estimates the mixture and is stable compared to other hyperparameters.
 -> The model is too sensitive on the sigma_ini parameter to detemine the covariance. It affects covariance too much if we set it too high or too low.
 -> The pthv component is not properly extrapolated in some cases. It reduces the number of components to a great extent in some samples.
--> The confidence threshold if set above 0.95 usually determines correct number of components to be removed and is stable as compared to other hyperparameters.
+-> The confidence threshold if set above 0.95 usually determines correct number of components to be removed and is stable compared to other hyperparameters.
 
 Case-III: Checking the efficiency corresponding to the parameters of the Gaussian Mixtures
