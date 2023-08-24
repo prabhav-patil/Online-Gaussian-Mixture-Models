@@ -1,8 +1,7 @@
 Note: We consider only 1-D dataset to empirical analysis
 
-Stable Hyperparameters: tau, confidence_threshold  
-Sensitive Hyperparameters: sigma_ini, pthv
-Incorrectly extrapolated hyperparameters: pthv
+Stable Hyperparameters: confidence_threshold, pthv 
+Sensitive Hyperparameters: sigma_ini, tau
 
 Case-I: Checking the efficiency corresponding to the number of generated samples
 -> As the samples increase, the covariance values decrease as the model becomes increasingly more definite.
@@ -11,8 +10,7 @@ Case-I: Checking the efficiency corresponding to the number of generated samples
 Case-II: Checking the efficiency corresponding to the hyperparameters
 ( We assume that the parameters of the source mixture do not significantly overlap and each datapoint generated has a significant distinction to the mixture component it belongs to )
 -> The mean is not affected. The offset is correctly determined in almost every case until the number of components are correctly determined.
--> Sometimes the model fails to capture the correct approximation of prior probabilities in the classical case, which depends upon the sequence of datasets as well.
--> Tau if set below 0.2 correctly estimates the mixture and is stable compared to other hyperparameters.
+-> Sometimes the model fails to capture the correct approximation of prior probabilities in the classical case, which depends upon novelty threshold ( tau ).
 -> The model is too sensitive on the sigma_ini parameter to detemine the covariance. It affects covariance too much if we set it too high or too low.
 -> The pthv component is not properly extrapolated in some cases. It reduces the number of components to a great extent in some samples.
 -> The confidence threshold if set above 0.95 usually estimates correct mixture and is stable compared to other hyperparameters.
