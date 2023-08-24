@@ -2,6 +2,7 @@ Note: We consider only 1-D dataset to empirical analysis
 
 Stable Hyperparameters: confidence_threshold, pthv 
 Sensitive Hyperparameters: sigma_ini, tau
+Prior Probabilities generated are not correct in some cases.
 
 Case-I: Checking the efficiency corresponding to the number of generated samples
 -> As the samples increase, the covariance values decrease as the model becomes increasingly more definite.
