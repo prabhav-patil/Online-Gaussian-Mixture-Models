@@ -22,3 +22,10 @@ Case-III: Checking the efficiency corresponding to the parameters of the Gaussia
 -> We need to have a different settings of hyperparameter for different set of structure of source mixtures.
 -> To get a robust estimate of correct fit, we need to extrapolate these hyperparameters on a large set of dataset and fit them accordingly
 -> If the structure of 2 gaussians is quite different from each, setting up one hyperparameter corresponding to one gaussian would be compromising the setting of the other
+
+Room for improvement:
+-> We do not need to keep hyperparameter's value fixed for all gaussian. 
+  Subcase-I:  Make a set of hyperparameter for each gaussian component
+  Subcase-II: Modify the equation form such that it also takes into account the current prior probability and covariance of the component
+-> Implement and compare hyperparameter optimization techniques so as to get an optimal set of hyperparameters to achieve the task
+-> Instead of just trying to eliminate the spurious components which would inherently result in a loss of data, try to merge them with other gaussian components
