@@ -25,7 +25,7 @@ Case-III: Checking the efficiency corresponding to the parameters of the Gaussia
 
 Room for improvement:
 -> We do not need to keep hyperparameter's value fixed for all gaussian. 
-  Subcase-I:  Make a set of hyperparameter for each gaussian component
-  Subcase-II: Modify the equation form such that it also takes into account the current prior probability and covariance of the component
+  Approach-I:  Make a set of hyperparameter for each gaussian component
+  Approach-II: Modify the equation form such that it also takes into account the current prior probability and covariance of the component
 -> Implement and compare hyperparameter optimization techniques so as to get an optimal set of hyperparameters to achieve the task
 -> Instead of just trying to eliminate the spurious components which would inherently result in a loss of data, try to merge them with other gaussian components
