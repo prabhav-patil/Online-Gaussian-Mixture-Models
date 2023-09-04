@@ -16,10 +16,13 @@ TreeParzenEstimator(y*, max_iter, L):
 7. if iter = max_iter then return x_new
    else Go to Step 2.
 
-Clarification:
--> What to set as Loss Function in this case?
-The possible loss functions which can be used:
+Clarifications:
+-> The possible loss functions which can be used:
 i.   AIC
 ii.  BIC   
 iii. MDL
 iv.  negative log likelihood
+-> KernelDensityEstimate can be implemented using the scipy library
+
+Inference:
+Ultimately, we use bayesian approach to find our way to the most optimal hyperparameters which is given by the algorithm.
