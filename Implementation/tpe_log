@@ -1,1 +1,17 @@
-
+Psuedocode:
+TreeParzenEstimator(y*, max_iter, L):
+1. Take n0 random samples, {xi: i=1,2,3,...,n0}
+   Set X = [xi]
+   Set Y = [L(xi)] 
+   Set iter = 0
+2. Set P = [xi: L(xi)<y*]
+   Set Q = [xi: L(xi)>y*]
+3. Set p(x) = parzen_estimate(P)
+   Set q(x) = parzen_estimate(Q)
+4. x_new = argmax(p(x)/q(x))
+   y_new = L(x_new) 
+5. Append x_new to X
+   Append L(x_new) to X
+6. iter = iter + 1
+7. if iter = max_iter then return x_new
+   else Go to Step 2.
