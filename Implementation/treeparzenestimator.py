@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.mixture import GaussianMixture
+from scipy.stats import multivariate_normal
+from scipy.stats import norm
+from sklearn.neighbors import KernelDensity
+
 from igmm import igmm
 from spurious_removal import deletespurious
 
@@ -49,11 +48,7 @@ def plot_generated_samples(data_points,pi_value,mu_value,C_value,dim):
         plt.grid()
         plt.show()
     return
-
-
-# In[2]:
-
-
+    
 #source
 dim = 1
 num_samples = 1000
@@ -68,14 +63,6 @@ sample_generator.generate_samples(num_samples)
 X = sample_generator.X
 X = np.array(X)
 plot_generated_samples(X,pi_value,mu_value,C_value,dim)
-
-
-# In[3]:
-
-
-from sklearn.mixture import GaussianMixture
-from scipy.stats import multivariate_normal
-from scipy.stats import norm
 
 class online_gmm:
     def __init__(self, X, dim, sigma_ini, tau, confidence):
@@ -128,12 +115,6 @@ class online_gmm:
         bic = -2 * log_likelihood + k * np.log(n_samples)
         return bic       
 
-
-# In[4]:
-
-
-from sklearn.neighbors import KernelDensity
-
 class tpe_opt:
     def __init__(self,X,dim,max_iter,Y,confidence):
         self.X = X
@@ -179,10 +160,6 @@ class tpe_opt:
             else:
                 self.Q_values.append(hps)
         return hps
-            
-
-
-# In[ ]:
 
 
 
