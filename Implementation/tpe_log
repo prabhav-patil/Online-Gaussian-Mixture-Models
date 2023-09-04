@@ -18,3 +18,8 @@ TreeParzenEstimator(y*, max_iter, L):
 
 Clarification:
 -> What to set as Loss Function in this case?
+The possible loss functions which can be used:
+i.   AIC
+ii.  BIC   
+iii. MDL
+iv.  negative log likelihood
