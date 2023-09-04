@@ -15,3 +15,6 @@ TreeParzenEstimator(y*, max_iter, L):
 6. iter = iter + 1
 7. if iter = max_iter then return x_new
    else Go to Step 2.
+
+Clarification:
+-> What to set as Loss Function in this case?
