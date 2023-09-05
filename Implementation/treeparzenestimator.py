@@ -104,6 +104,23 @@ class online_gmm:
         self.cov = np.array(self.cov)
         bic_value = self.calculate_bic(n)
         return bic_value        
+    
+    def plot_fit(self):
+        if self.dim==1:
+            x_vals = np.linspace(min(self.X) - 1, max(self.X) + 1, 500)
+            y_mixture = np.zeros_like(x_vals)
+            for i in range(len(self.pi)):
+                y_vals = self.pi[i]*gaussian(x_vals,self.mean[i][0],self.cov[i][0])
+                y_mixture = y_mixture + y_vals
+            plt.plot(x_vals,y_mixture,label='Output Mixture')
+            plt.scatter(self.X, np.zeros_like(self.X), color='red', label='Generated Samples')
+            plt.xlabel('X')
+            plt.ylabel('Density')
+            plt.title('Estimated Mixture from Generated Samples')
+            plt.legend()
+            plt.grid()
+            plt.show()
+        return
 
     def calculate_bic(self, n_components):
         log_likelihood = 0.0
@@ -113,8 +130,8 @@ class online_gmm:
             log_likelihood += self.pi[i] * component_likelihood
         k = (n_components - 1) + n_components * (self.dim + self.dim*(self.dim + 1) / 2)
         bic = -2 * log_likelihood + k * np.log(n_samples)
-        return bic       
-
+        return bic           
+        
 class tpe_opt:
     def __init__(self,X,dim,max_iter,Y,confidence):
         self.X = X
@@ -124,8 +141,8 @@ class tpe_opt:
         self.Y = Y
         self.samples = list()
         self.loss_values = list()
-        self.P_samples = list()
-        self.Q_samples = list()
+        self.P_values = list()
+        self.Q_values = list()
         
     def fit(self):
         num_samples = 10
@@ -140,27 +157,32 @@ class tpe_opt:
                 self.P_values.append([tau_values[i],sigma_values[i]])
             else:
                 self.Q_values.append([tau_values[i],sigma_values[i]])
-        
+                
         for iter in range(self.max_iter):
-            l_kde = KernelDensity(kernel='gaussian', bandwidth=5.0)
-            g_kde = KernelDensity(kernel='gaussian', bandwidth=5.0)
+            l_kde = KernelDensity(kernel='gaussian', bandwidth=0.1)
+            g_kde = KernelDensity(kernel='gaussian', bandwidth=0.1)
             l_kde.fit(self.P_values)
             g_kde.fit(self.Q_values)
             
-            n_samples = 100
+            n_samples = 1000
             samples = l_kde.sample(n_samples)
+            
+            clipped_samples = list()
+            for i in range(n_samples):
+                if(samples[i][0] > 0 and samples[i][0] < 1):
+                    clipped_samples.append(samples[i])
+            samples = clipped_samples
             l_score = l_kde.score(samples)
             g_score = g_kde.score(samples)
             hps = samples[np.argmax(g_score/l_score)]
             
             model = online_gmm(self.X, self.dim, hps[1], hps[0], self.confidence)
             loss_value = model.fit()
+            self.samples.append(hps)
+            self.loss_values.append(loss_value)
             if(loss_value < self.Y):
                 self.P_values.append(hps)
             else:
                 self.Q_values.append(hps)
-        return hps
-
-
-
-
+        hps = np.array(hps)
+        return hps 
