@@ -28,4 +28,6 @@ Room for improvement:
   Approach-I:  Make a set of hyperparameter for each gaussian component
   Approach-II: Modify the equation form such that it also takes into account the current prior probability and covariance of the component
 -> Implement and compare hyperparameter optimization techniques so as to get an optimal set of hyperparameters to achieve the task
+  Approach-I: Use tree parzen estimators to achieve an optimal set of hyperparameters, but the time complexity is too high.
 -> Instead of just trying to eliminate the spurious components which would inherently result in a loss of data, try to merge them with other gaussian components
+  Approach-I: Create a set of potential clusters. For every datapoint which comes, compare using the same tau criterion. If the number of datapoint get above some threshold, include that in the gaussian mixtures.
