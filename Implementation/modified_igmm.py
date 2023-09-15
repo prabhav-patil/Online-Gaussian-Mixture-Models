@@ -98,8 +98,4 @@ class igmm:
         return
 
 
-# In[ ]:
-
-
-
 
