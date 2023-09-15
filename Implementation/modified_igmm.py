@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import numpy as np
 import math
 from scipy.stats import multivariate_normal
@@ -96,17 +90,11 @@ class igmm:
         iter = 1
         for x in self.X:
             self.update(x)
-            #print(f"\n\n\033[1mFor next sample {iter}:\033[0m")
-            #print(f"\033[1msample value: {x}\033[0m")
             print_pi = np.array(self.pi)
             print_mean = np.array(self.mu)
             print_cov = np.array(self.C)
             print_sp = np.array(self.sp)
-            #for j in range(len(self.mu)):
-                #print(f"\033[1mComponent #{j+1}:\033[0m\nPrior Probability: {print_pi[j]}\nMean: {print_mean[j][0]}\nContribution of dataset: {print_sp[j]}\nCovariance:\n {print_cov[j]}")
             iter+=1
-        #for j in range(len(self.mu)):
-        #        print(f"\033[1mComponent #{j+1}:\033[0m\nPrior Probability: {print_pi[j]}\nMean: {print_mean[j][0]}\nContribution of dataset: {print_sp[j]}\nCovariance:\n {print_cov[j]}")
         return
 
 
