@@ -1,0 +1,21 @@
+I need to store the data points which do not lie in any whatsoever created cluster, in a separate container. Once the container reaches some threshold, we start
+to include it in our original cluster.
+
+Revised IGMM Algorithm:
+  1. x0 <- datapoint
+  2. t0 <- thresholdcontributionvalue
+  3. if no objectiveclustermatch(x0):
+        use igmm on outlierclusters
+        if any outliercluster crosses t0:
+          include it in objectiveclusters and update the corresponding parameters of the objectiveclusters.
+          remove the outliercluster from outlierclusters and upate the corresponding parameters of the outlierclusters.
+  4. else:
+        use igmm on objectiveclusters
+  5. return parameters of objectiveclusters
+
+Hyperparameters: All igmm parameters , threshold contribution value 
+Data Structures to create: objectiveclusters, outlierclusters
+Things to take care of:
+  -> Updates of parameters of GMM when we insert / remove a cluster
+  -> Incorporating the igmm into revised_igmm Algorithm
+  -> Exact data-structure to store the parameters of the objectiveclusters and outlierclusters
