@@ -19,3 +19,9 @@ Things to take care of:
   -> Updates of parameters of GMM when we insert / remove a cluster
   -> Incorporating the igmm into revised_igmm Algorithm
   -> Exact data-structure to store the parameters of the objectiveclusters and outlierclusters
+
+Assumption: Model will keep track of the datapoints corresponding to outlierclusters I create.
+1. Updates when inserting a cluster into objectiveclusters:
+If we have all the datapoints we can use the igmm sequential update process to update all the parameters.
+2. Updates when removing a cluster from outlierclusters:
+We need to sequentially update the parameters in a reverse manner of igmm sequential update process.
