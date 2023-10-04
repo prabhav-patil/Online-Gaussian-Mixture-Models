@@ -24,4 +24,5 @@ Assumption: Model will keep track of the datapoints corresponding to outlierclus
 1. Updates when inserting a cluster into objectiveclusters:
 If we have all the datapoints we can use the igmm sequential update process to update all the parameters.
 2. Updates when removing a cluster from outlierclusters:
-We need to sequentially update the parameters in a reverse manner of igmm sequential update process.
+We need to sequentially update the parameters in a reverse manner of igmm sequential update process. It is not feasible currently to check the accuracy of
+"machine unlearning". I am training the whole outlierclusters again on the outlierdataset excluding the dataset which we are now inserting into objectiveclusters.
