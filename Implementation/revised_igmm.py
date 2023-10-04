@@ -1,14 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import math
 import igmm
 from scipy.stats import multivariate_normal
-
 class revised_igmm:
     def __init__(self, X, dim, sigma_ini, tau, outlierthreshold):
         self.X = X
@@ -195,11 +188,3 @@ class revised_igmm:
                     self.insert_update(datatomodify)
                     self.remove_update()
         return
-                    
-
-
-# In[ ]:
-
-
-
-
