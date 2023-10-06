@@ -2,6 +2,7 @@ import numpy as np
 import math
 import igmm
 from scipy.stats import multivariate_normal
+
 class revised_igmm:
     def __init__(self, X, dim, sigma_ini, tau, outlierthreshold):
         self.X = X
@@ -82,7 +83,7 @@ class revised_igmm:
                 total_sum = np.sum(self.sp_outlier)
                 for j in range(len(self.sp_outlier)-1):
                     self.pi_outlier[j] = self.sp_outlier[j]/total_sum
-                self.pi_outlier.append(self.sp[len(self.sp_outlier)-1]/total_sum)
+                self.pi_outlier.append(self.sp_outlier[len(self.sp_outlier)-1]/total_sum)
             else:
                 for j in range(len(self.sp_outlier)):
                     posterior_value = self.posterior_prob(x,j,2)
@@ -178,12 +179,15 @@ class revised_igmm:
         
     def run(self):
         for x in self.X:
-            if(self.objclustermatch(x)):
+            if(self.objclustermatch(x)==False):
+                print("Updated original clusters\n")
                 self.igmm_update(x,1)
             else:
+                print("Outlier case detected\n")
                 self.igmm_update(x,2)
                 outlier_to_obj = self.checkoutlier()
-                if(outlier_to_obj):
+                if(outlier_to_obj!=-1):
+                    print("Outliers forming a cluster\n")
                     datatomodify = self.update_outlierdata(outlier_to_obj)
                     self.insert_update(datatomodify)
                     self.remove_update()
